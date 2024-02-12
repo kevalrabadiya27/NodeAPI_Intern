@@ -1,6 +1,5 @@
 const signUp = require('../models/signUp')
 const bcryptjs = require('bcryptjs')
-const validate = require('../middleware/validate')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv').config()
 
@@ -24,6 +23,7 @@ exports.signUp = async(req,res)=>{
                 message:'Error in hasing'
             })
        }
+
 // save in DB1
        const user = await signUp.create({username,password:hashpwd});
        return res.json({
@@ -39,7 +39,6 @@ exports.signUp = async(req,res)=>{
     }
     
 }
-
 
 exports.signIn = async(req,res)=>{
     try{
@@ -66,20 +65,20 @@ exports.signIn = async(req,res)=>{
             let token = jwt.sign(payload,
                 process.env.JWT_SEC,{
                 expiresIn:"2h"
-            })
-    
-            user.token = token;
-            user.password = undefined;
+            })      
 
-            console.log(user);
-    
+            user.token = token;
             const options = {
                 expires:new Date(Date.now()+3*24*60*60*1000)
             }
-            res.cookie("token",token,options).json({
+            //  return res.cookie("token",token,options).json({
+            //     sucess:true,
+            //     token,
+            //     message:'sucessfully created'
+            // })
+            return res.json({
                 sucess:true,
                 token,
-                user,
                 message:'sucessfully created'
             })
         }
@@ -90,7 +89,7 @@ exports.signIn = async(req,res)=>{
             })
         }
     }catch(err){
-         return res.json({
+           return res.json({
                 sucess:false,
                 message:err.message
             })

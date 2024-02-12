@@ -7,14 +7,15 @@ const { updateTodo } = require('../controllers/updateTodo')
 const { deleteTodo } = require('../controllers/deleteTodo')
 
 // define API route
-router.post('/createTodo', createTodo)
+router.post('/todo/create', createTodo)
 
-router.get('/getTodoAll', getTodoAll)
-router.get('/getTodo/:id', getTodo)
-router.get('/getTodoFilter',getTodoFilter)
 
-router.put('/updateTodo/:id', updateTodo)
-router.delete('/deleteTodo/:id', deleteTodo)
+router.get('/todo/getall', getTodoAll)
+router.get('/todo/get/:id', getTodo)
+router.get('/todo/getFilter',getTodoFilter)
+
+router.put('/todo/update/:id', updateTodo)
+router.delete('/todo/delete/:id', deleteTodo)
 
 module.exports = router;
 
